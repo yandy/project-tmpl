@@ -1,1 +1,1 @@
-# project-tmpl
+# Project Templates
