@@ -11,4 +11,6 @@ RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     adduser -u 1000 -G python -s /bin/sh -D python ;\
     apk add bash openssh-client-default
 
+COPY --chmod=755 docker/postcreate.dev /postcreate
+
 USER python

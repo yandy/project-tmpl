@@ -22,7 +22,7 @@ docker build --build-arg PNAME=${pname} -t ${pname}:deploy -f docker/Dockerfile.
 copy `.devcontainer` to `project`, then open `project` with vscode
 
 ```sh
-cp -r .devcontainer project
+cp .devcontainer.json project/
 code project
 ```
 

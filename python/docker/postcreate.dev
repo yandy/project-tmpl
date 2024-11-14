@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
+python -m venv .venv
