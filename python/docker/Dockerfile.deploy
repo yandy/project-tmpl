@@ -1,0 +1,32 @@
+ARG PNAME="python-tmpl"
+
+# build stage
+FROM ${PNAME}:base AS build
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make \
+        postgresql-dev
+
+WORKDIR /project
+
+COPY project/requirements.txt /project/requirements.txt
+
+RUN --mount=type=cache,target=/root/.cache/pip set -eux; \
+    pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple ; \
+    python -m venv .venv ; \
+    source .venv/bin/activate ; \
+    pip install -r requirements.txt
+
+COPY project/ /project/
+
+
+# deploy stage
+FROM ${PNAME}:base AS deploy
+
+COPY --from=build /project /project
+
+COPY --chmod=755 docker/entrypoint /entrypoint
+
+WORKDIR /project
+
+ENTRYPOINT ["/entrypoint"]

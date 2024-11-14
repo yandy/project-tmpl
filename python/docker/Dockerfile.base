@@ -1,0 +1,5 @@
+FROM python:3.12-alpine
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    sed -i "s@dl-cdn.alpinelinux.org@mirrors.aliyun.com@g" /etc/apk/repositories; \
+    apk add libpq
