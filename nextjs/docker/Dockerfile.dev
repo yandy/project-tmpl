@@ -1,0 +1,11 @@
+ARG PNAME="nextjs-tmpl"
+
+FROM ${PNAME}:base
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add bash openssh-client-default
+
+COPY --chmod=755 docker/postcreate.dev /postcreate

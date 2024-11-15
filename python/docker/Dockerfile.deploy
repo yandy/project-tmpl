@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.cache/pip set -eux; \
 
 
 # deploy stage
-FROM ${PNAME}:base AS deploy
+FROM ${PNAME}:base AS runner
 
 COPY . /project
 COPY --chmod=755 ./docker/entrypoint.deploy /entrypoint

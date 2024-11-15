@@ -1,0 +1,28 @@
+ARG PNAME="nextjs-tmpl"
+
+# build stage
+FROM ${PNAME}:base AS build
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make
+
+COPY . /project
+
+WORKDIR /project
+
+RUN --mount=type=cache,target=/project/node_modules set -eux; \
+    npm config set registry https://registry.npmmirror.com ; \
+    npm install; npm run build
+
+
+# deploy stage
+FROM ${PNAME}:base AS runner
+
+WORKDIR /project
+
+COPY --from=build /project/public ./public
+
+COPY --from=build /project/.next/standalone ./
+COPY --from=build /project/.next/static ./.next/static
+
+CMD ["node", "server.js"]
