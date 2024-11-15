@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+# 检查参数数量
+if [ "$#" -lt 1 ]; then
+	echo "Usage: $0 <base|dev|deploy|...>"
+	exit 1
+fi
 
 pname="${ImageName:-$(basename $(pwd))}"
 docker build --build-arg PNAME=${pname} -t ${pname}:base -f docker/Dockerfile.base .
@@ -14,6 +19,6 @@ tagname="${pname}:${1}"
 if [ -f "${dockerfile}" ]; then
 	docker build --build-arg PNAME=${pname} -t ${tagname} -f ${dockerfile} .
 else
-	echo "Usage: $0 <base|dev|deploy>"
+	echo "Usage: $0 <base|dev|deploy|...>"
 	exit 1
 fi

@@ -18,6 +18,6 @@ $tagname = "$pname`:$mode"
 if (Test-Path -Path $dockerfile -PathType Leaf) {
     docker build --build-arg PNAME=$pname -t $tagname -f $dockerfile .
 } else {
-    Write-Host "Usage: build <base|dev|deploy>"
+    Write-Host "Usage: build <base|dev|deploy|...>"
     exit 1
 }
