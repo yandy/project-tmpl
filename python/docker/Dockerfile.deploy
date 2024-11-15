@@ -4,8 +4,7 @@ ARG PNAME="python-tmpl"
 FROM ${PNAME}:base AS build
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make \
-        postgresql-dev
+    apk add curl git g++ gcc make
 
 COPY ./requirements.txt /project/requirements.txt
 
