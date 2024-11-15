@@ -16,6 +16,12 @@ if [ ! -d "$tmpl" ]; then
 	exit 1
 fi
 
+# 检查目标路径是否存在
+if [ ! -d "$target" ]; then
+	echo "Target does not exists: $target"
+	exit 1
+fi
+
 # 应用模板
 cp -R -t "$target" "$tmpl/docker" "$tmpl/.dockerignore"
 if [ -d "$tmpl"/.devcontainer ]; then

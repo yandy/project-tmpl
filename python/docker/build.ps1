@@ -1,22 +1,24 @@
-param(
-    [Parameter(Mandatory = $true)]
-    [string]$mode
+param (
+    [Parameter(Mandatory = $false)]
+    [ValidateSet("dev", "deploy")]
+    [string]$mode = "dev"
 )
 
-$pname = (Get-Item -Path ".\").Name
-docker build --build-arg PNAME=$pname -t $pname:base -f docker/Dockerfile.base .
+$projectName = (Get-Item (Get-Location)).BaseName
+
+Write-Host "Building base image..."
+docker build --build-arg "PNAME=$projectName" -t "$projectName`:base" -f "docker/Dockerfile.base" .
 
 switch ($mode) {
     "dev" {
-        docker build --build-arg PNAME=$pname -t $pname:dev -f docker/Dockerfile.dev .
-        break
+        Write-Host "Building dev image..."
+        docker build --build-arg "PNAME=$projectName" -t "$projectName`:dev" -f "docker/Dockerfile.dev" .
     }
     "deploy" {
-        docker build --build-arg PNAME=$pname -t $pname:deploy -f docker/Dockerfile.deploy .
-        break
+        Write-Host "Building deploy image..."
+        docker build --build-arg "PNAME=$projectName" -t "$projectName`:deploy" -f "docker/Dockerfile.deploy" .
     }
     default {
-        Write-Host "Usage: $($MyInvocation.MyCommand.Name) <dev|deploy>"
-        exit 1
+        Write-Host "Invalid mode. Please specify either 'dev' or 'deploy'."
     }
 }

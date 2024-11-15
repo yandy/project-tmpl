@@ -5,15 +5,22 @@ param(
     [string]$target
 )
 
-if (-not (Test-Path -Path $tmpl -PathType Container)) {
+# 检查模板文件是否存在
+if (!(Test-Path -Path $tmpl -PathType Container)) {
     Write-Host "Template not found: $tmpl"
     exit 1
 }
 
-if (-not (Test-Path -Path $target -PathType Container)) {
-    New-Item -ItemType Directory -Path $target | Out-Null
+# 检查目标目录是否存在
+if (!(Test-Path -Path $target -PathType Container)) {
+    Write-Host "Target directory does not exists: $target"
+    exit 1
 }
 
-Copy-Item -Path "$tmpl\*" -Destination $target -Recurse
+# 应用模板
+Copy-Item -Path "$tmpl/docker" -Destination $target -Recurse -Force
+Copy-Item -Path "$tmpl/.dockerignore" -Destination $target -Force
+if (Test-Path -Path "$tmpl/.devcontainer" -PathType Container) {
+    Copy-Item -Path "$tmpl/.devcontainer" -Destination $target -Recurse -Force
 
-Write-Host "Template applied to $target successfully."
+}
