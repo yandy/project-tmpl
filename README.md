@@ -16,3 +16,4 @@
 ## Templates
 
 1. `python` - python app template, include dev, deploy
+2. `next` - nextjs app template, include dev, deploy(ssr or static)

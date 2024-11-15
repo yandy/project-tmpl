@@ -1,4 +1,4 @@
-ARG PNAME="nextjs-tmpl"
+ARG PNAME="next-tmpl"
 
 FROM ${PNAME}:base
 
