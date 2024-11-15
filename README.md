@@ -12,6 +12,7 @@
 ## Notes
 - The `apply-tmpl.sh` script will overwrite any files in the target repo that are in the template
 - Use `.ps1` instead of `.sh` for Windows
+- docker build use dirname of repo as image name in default, you can override it by setting `ImageName` env variable, eg. `ImageName=my-image-name ./docker/build.sh dev`
 
 ## Templates
 
