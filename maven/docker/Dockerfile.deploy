@@ -1,0 +1,26 @@
+ARG PNAME="maven-tmpl"
+
+# build stage
+FROM ${PNAME}:base AS build
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make
+
+COPY docker/settings.xml /root/.m2/settings.xml
+
+COPY . /project
+
+WORKDIR /project
+
+RUN --mount=type=cache,target=/usr/share/maven/ref/repository set -eux; \
+    sed -i "s@{{local_repo_path}}@/usr/share/maven/ref/repository@g" /root/.m2/settings.xml; \
+    mvn package -Dmaven.test.skip=true
+
+
+# deploy stage
+FROM eclipse-temurin:21-jre-alpine
+
+COPY --chmod=755 ./docker/entrypoint.deploy /entrypoint
+COPY --from=build /project/target/*.jar /project/
+
+ENTRYPOINT [ "/entrypoint" ]
