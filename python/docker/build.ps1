@@ -1,24 +1,23 @@
 param (
-    [Parameter(Mandatory = $false)]
-    [ValidateSet("dev", "deploy")]
+    [Parameter(Mandatory = $true)]
     [string]$mode = "dev"
 )
 
-$projectName = (Get-Item (Get-Location)).BaseName
+$pname = if ($null -ne $env:ImageName) { $env:ImageName } else { (Get-Item (Get-Location)).BaseName}
 
 Write-Host "Building base image..."
-docker build --build-arg "PNAME=$projectName" -t "$projectName`:base" -f "docker/Dockerfile.base" .
+docker build --build-arg "PNAME=$pname" -t "$pname`:base" -f "docker/Dockerfile.base" .
 
-switch ($mode) {
-    "dev" {
-        Write-Host "Building dev image..."
-        docker build --build-arg "PNAME=$projectName" -t "$projectName`:dev" -f "docker/Dockerfile.dev" .
-    }
-    "deploy" {
-        Write-Host "Building deploy image..."
-        docker build --build-arg "PNAME=$projectName" -t "$projectName`:deploy" -f "docker/Dockerfile.deploy" .
-    }
-    default {
-        Write-Host "Invalid mode. Please specify either 'dev' or 'deploy'."
-    }
+if ($mode -eq "base") {
+    exit 0
+}
+
+$dockerfile = "docker/Dockerfile.$mode"
+$tagname = "$pname`:$mode"
+
+if (Test-Path -Path $dockerfile -PathType Leaf) {
+    docker build --build-arg PNAME=$pname -t $tagname -f $dockerfile .
+} else {
+    Write-Host "Usage: build <base|dev|deploy>"
+    exit 1
 }
