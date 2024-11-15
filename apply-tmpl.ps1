@@ -25,3 +25,6 @@ Copy-Item -Path "./build.sh" -Destination "$target/docker" -Force
 if (Test-Path -Path "$tmpl/.devcontainer" -PathType Container) {
     Copy-Item -Path "$tmpl/.devcontainer" -Destination $target -Recurse -Force
 }
+if (Test-Path -Path "$tmpl/.notice" -PathType Leaf) {
+    Get-Content "$tmpl/.notice"
+}

@@ -1,0 +1,15 @@
+ARG PNAME="rails-tmpl"
+
+FROM ${PNAME}:base
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make postgresql-dev
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    addgroup -g 1000 ruby; \
+    adduser -u 1000 -G ruby -s /bin/sh -D ruby ;\
+    apk add bash openssh-client-default
+
+COPY --chmod=755 docker/postcreate.dev /postcreate
+
+USER ruby

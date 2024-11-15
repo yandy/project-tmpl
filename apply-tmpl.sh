@@ -28,3 +28,6 @@ cp -t "$target/docker" "./build.sh" "./build.ps1"
 if [ -d "$tmpl"/.devcontainer ]; then
 	cp -R "$tmpl"/.devcontainer "$target"
 fi
+if [ -f "$tmpl"/.notice ]; then
+	cat "$tmpl"/.notice
+fi

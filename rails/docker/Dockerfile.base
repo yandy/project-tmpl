@@ -1,5 +1,5 @@
-FROM python:3.12-alpine
+FROM ruby:3-alpine
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
-    apk add ca-certificates tzdata
+    apk add ca-certificates tzdata postgresql-client bash
