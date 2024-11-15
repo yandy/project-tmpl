@@ -21,10 +21,14 @@
         "vscode": {
             // Set *default* container specific settings.json values on container create.
             "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash"
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter"
+                }
             },
             "extensions": [
                 "ms-python.python",
+                "ms-python.black-formatter",
                 "ms-toolsai.jupyter"
             ]
         }
