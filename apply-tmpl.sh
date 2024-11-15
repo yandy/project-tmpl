@@ -7,7 +7,7 @@ if [ "$#" -lt 2 ]; then
 fi
 
 # 提取模板和目标路径
-tmpl="$(dirname $0)/$1"
+tmpl="./$1"
 target="$2"
 
 # 检查模板文件是否存在
@@ -24,6 +24,7 @@ fi
 
 # 应用模板
 cp -R -t "$target" "$tmpl/docker" "$tmpl/.dockerignore"
+cp -t "$target/docker" "./build.sh" "./build.ps1"
 if [ -d "$tmpl"/.devcontainer ]; then
 	cp -R "$tmpl"/.devcontainer "$target"
 fi

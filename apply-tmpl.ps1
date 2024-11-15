@@ -20,7 +20,8 @@ if (!(Test-Path -Path $target -PathType Container)) {
 # 应用模板
 Copy-Item -Path "$tmpl/docker" -Destination $target -Recurse -Force
 Copy-Item -Path "$tmpl/.dockerignore" -Destination $target -Force
+Copy-Item -Path "./build.ps1" -Destination "$target/docker" -Force
+Copy-Item -Path "./build.sh" -Destination "$target/docker" -Force
 if (Test-Path -Path "$tmpl/.devcontainer" -PathType Container) {
     Copy-Item -Path "$tmpl/.devcontainer" -Destination $target -Recurse -Force
-
 }
