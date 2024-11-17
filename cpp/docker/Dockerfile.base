@@ -1,0 +1,5 @@
+FROM ghcr.io/yandy/cpp-buildpack:alpine
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
+    apk add ca-certificates tzdata

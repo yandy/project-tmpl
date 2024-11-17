@@ -1,0 +1,21 @@
+ARG PNAME="cpp-tmpl"
+
+# build stage
+FROM ${PNAME}:base AS build
+
+COPY . /project
+
+WORKDIR /project
+
+RUN --mount=type=cache,target=/root/.cache/vcpkg \
+    set -eux; \
+    cmake --preset=docker; \
+    cmake --build --preset=docker
+
+
+# deploy stage
+FROM ghcr.io/yandy/cpp-runtime:alpine
+
+COPY --from=build /opt/project /opt/project
+
+ENV PATH="${PATH}:/opt/project/bin"

@@ -1,0 +1,13 @@
+ARG PNAME="cpp-tmpl"
+
+FROM ${PNAME}:base
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    addgroup -g 1000 cpp; \
+    adduser -u 1000 -G cpp -s /bin/sh -D cpp \
+    ; \
+    apk add bash openssh-client-default
+
+COPY --chmod=755 docker/postcreate.dev /postcreate
+
+USER cpp
