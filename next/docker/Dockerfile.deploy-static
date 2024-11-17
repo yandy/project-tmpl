@@ -4,17 +4,23 @@ ARG PNAME="next-tmpl"
 FROM ${PNAME}:base AS build
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make
+    apk add curl git g++ gcc make ; \
+    npm install -g pnpm
 
-COPY . /project
+COPY package.json pnpm-lock.yaml /project/
 
 WORKDIR /project
 
-RUN --mount=type=cache,target=/project/node_modules set -eux; \
+RUN --mount=type=cache,target=/var/cache/pnpm-store set -eux; \
+    pnpm config set registry https://registry.npmmirror.com ; \
+    pnpm config set store-dir /var/cache/pnpm-store ; \
+    pnpm install
+
+COPY . /project
+
+RUN set -eux; \
     sed -i "s@standalone@export@g" next.config.mjs; \
-    npm config set registry https://registry.npmmirror.com ; \
-    npm install -g pnpm ; \
-    pnpm install; pnpm run build
+    pnpm run build
 
 
 # deploy stage
