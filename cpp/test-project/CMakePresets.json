@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "vcpkg",
+      "generator": "Ninja",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "develop",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Debug"
+        }
+      },
+      "binaryDir": "${sourceDir}/build"
+    },
+    {
+      "name": "docker",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Release"
+        }
+      },
+      "binaryDir": "${sourceDir}/build",
+      "installDir": "/opt/app"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "docker",
+      "configurePreset": "docker",
+      "targets":["install"]
+    }
+  ]
+}
