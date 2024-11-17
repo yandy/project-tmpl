@@ -1,0 +1,12 @@
+FROM alpine:3.20
+
+ENV VCPKG_FORCE_SYSTEM_BINARIES=1 \
+    VCPKG_ROOT=/usr/local/vcpkg \
+    PATH="${PATH}:/usr/local/vcpkg"
+
+COPY --chmod=755 install-vcpkg /tmp/install-vcpkg
+
+RUN --mount=type=cache,target=/var/cache/apk/ \
+    set -eux; \
+    apk add curl git g++ gcc make cmake ninja pkgconf zip unzip tar; \
+    /tmp/install-vcpkg

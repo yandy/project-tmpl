@@ -1,0 +1,5 @@
+FROM alpine:3.20
+
+RUN --mount=type=cache,target=/var/cache/apk/ \
+    set -eux; \
+    apk add libstdc++

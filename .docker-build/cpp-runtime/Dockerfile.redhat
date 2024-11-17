@@ -1,0 +1,6 @@
+FROM redhat/ubi9
+
+RUN --mount=type=cache,target=/var/cache/yum \
+    set -eux; \
+    dnf install -y libstdc++; \
+    dnf clean all

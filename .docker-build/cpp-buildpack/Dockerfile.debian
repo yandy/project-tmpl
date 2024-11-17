@@ -1,0 +1,16 @@
+FROM debian:bookworm
+
+ENV VCPKG_FORCE_SYSTEM_BINARIES=1 \
+    VCPKG_ROOT=/usr/local/vcpkg \
+    PATH="${PATH}:/usr/local/vcpkg"
+
+COPY --chmod=755 install-vcpkg /tmp/install-vcpkg
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    set -eux; \
+    apt-get update; \
+    apt-get install -y \
+        curl git gcc g++ make cmake ninja-build pkg-config zip unzip tar; \
+    apt-get clean; \
+    /tmp/install-vcpkg
