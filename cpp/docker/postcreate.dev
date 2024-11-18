@@ -1,1 +1,3 @@
 #!/bin/sh -e
+
+mkdir -p $1/.vcpkg/archives

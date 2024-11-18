@@ -6,7 +6,8 @@ RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     addgroup -g 1000 cpp; \
     adduser -u 1000 -G cpp -s /bin/sh -D cpp \
     ; \
-    apk add bash openssh-client-default
+    apk add bash openssh-client-default gdb; \
+    chown cpp:cpp $VCPKG_ROOT/.vcpkg-root
 
 COPY --chmod=755 docker/postcreate.dev /postcreate
 

@@ -7,7 +7,7 @@
       "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
     },
     {
-      "name": "develop",
+      "name": "develop-docker",
       "inherits": "vcpkg",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": {
@@ -18,7 +18,7 @@
       "binaryDir": "${sourceDir}/build"
     },
     {
-      "name": "docker",
+      "name": "deploy-docker",
       "inherits": "vcpkg",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": {
@@ -27,13 +27,13 @@
         }
       },
       "binaryDir": "${sourceDir}/build",
-      "installDir": "/opt/app"
+      "installDir": "/opt/project"
     }
   ],
   "buildPresets": [
     {
-      "name": "docker",
-      "configurePreset": "docker",
+      "name": "deploy-docker",
+      "configurePreset": "deploy-docker",
       "targets":["install"]
     }
   ]
