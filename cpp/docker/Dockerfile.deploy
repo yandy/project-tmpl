@@ -8,9 +8,12 @@ COPY . /project
 WORKDIR /project
 
 RUN --mount=type=cache,target=/root/.cache/vcpkg \
+    --mount=type=cache,target=/usr/local/vcpkg/downloads \
+    --mount=type=cache,target=/usr/local/vcpkg/buildtrees \
+    --mount=type=cache,target=/usr/local/vcpkg/packages \
     set -eux; \
-    cmake --preset=docker; \
-    cmake --build --preset=docker
+    cmake --preset=deploy-docker; \
+    cmake --build --preset=deploy-docker
 
 
 # deploy stage
