@@ -7,6 +7,28 @@
       "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
     },
     {
+      "name": "develop-windows",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Debug"
+        }
+      },
+      "binaryDir": "${sourceDir}/build/windows"
+    },
+    {
+      "name": "develop-wsl",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Debug"
+        }
+      },
+      "binaryDir": "${sourceDir}/build/wsl"
+    },
+    {
       "name": "develop-docker",
       "inherits": "vcpkg",
       "cacheVariables": {
@@ -15,7 +37,7 @@
           "value": "Debug"
         }
       },
-      "binaryDir": "${sourceDir}/build"
+      "binaryDir": "${sourceDir}/build/docker"
     },
     {
       "name": "deploy-docker",
