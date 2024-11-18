@@ -2,7 +2,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$tmpl,
     [Parameter(Mandatory = $true)]
-    [string]$target
+    [string]$target,
+    [Parameter(Mandatory = $false)]
+    [bool]$skip_devc=$false
 )
 
 # 检查模板文件是否存在
@@ -22,7 +24,7 @@ Copy-Item -Path "$tmpl/docker" -Destination $target -Recurse -Force
 Copy-Item -Path "$tmpl/.dockerignore" -Destination $target -Force
 Copy-Item -Path "./build.ps1" -Destination "$target/docker" -Force
 Copy-Item -Path "./build.sh" -Destination "$target/docker" -Force
-if (Test-Path -Path "$tmpl/.devcontainer" -PathType Container) {
+if ($skip_devc -eq $false) {
     Copy-Item -Path "$tmpl/.devcontainer" -Destination $target -Recurse -Force
 }
 if (Test-Path -Path "$tmpl/.notice" -PathType Leaf) {
