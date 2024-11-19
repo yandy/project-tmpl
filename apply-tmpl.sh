@@ -29,6 +29,11 @@ cp -t "$target/docker" "./build.sh" "./build.ps1"
 if [ -z "$skip_devc" ]; then
 	cp -R "$tmpl"/.devcontainer "$target"
 fi
+if [ -f "$tmpl"/.extra ]; then
+	for f in $(cat "$tmpl"/.extra); do
+		cp -R "$tmpl/$f" "$target"
+	done
+fi
 if [ -f "$tmpl"/.notice ]; then
 	cat "$tmpl"/.notice
 fi

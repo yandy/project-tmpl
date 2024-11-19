@@ -27,6 +27,12 @@ Copy-Item -Path "./build.sh" -Destination "$target/docker" -Force
 if ($skip_devc -eq $false) {
     Copy-Item -Path "$tmpl/.devcontainer" -Destination $target -Recurse -Force
 }
+if (Test-Path -Path "$tmpl/.extra") {
+    Get-Content "$tmpl/.extra" | ForEach-Object {
+        $file = $_
+        Copy-Item -Path "$tmpl/$file" -Destination "$target" -Recurse -Force
+    }
+}
 if (Test-Path -Path "$tmpl/.notice" -PathType Leaf) {
     Get-Content "$tmpl/.notice"
 }
