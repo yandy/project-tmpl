@@ -40,6 +40,28 @@
       "binaryDir": "${sourceDir}/build/docker"
     },
     {
+      "name": "deploy-windows",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Release"
+        }
+      },
+      "binaryDir": "${sourceDir}/build"
+    },
+    {
+      "name": "deploy-linux",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Release"
+        }
+      },
+      "binaryDir": "${sourceDir}/build"
+    },
+    {
       "name": "deploy-docker",
       "inherits": "vcpkg",
       "cacheVariables": {
@@ -50,13 +72,6 @@
       },
       "binaryDir": "${sourceDir}/build",
       "installDir": "/opt/project"
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "deploy-docker",
-      "configurePreset": "deploy-docker",
-      "targets":["install"]
     }
   ]
 }
