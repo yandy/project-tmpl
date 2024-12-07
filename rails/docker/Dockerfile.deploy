@@ -3,9 +3,6 @@ ARG PNAME="rails-tmpl"
 # build stage
 FROM ${PNAME}:base AS build
 
-RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make postgresql-dev
-
 ENV RAILS_ENV="production"
 
 WORKDIR /project
@@ -31,7 +28,11 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 
 # deploy stage
-FROM ${PNAME}:base AS runner
+FROM ruby:3.3-alpine AS runner
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
+    apk add ca-certificates tzdata postgresql-client bash
 
 ENV RAILS_ENV="production"
 

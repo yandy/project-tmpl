@@ -1,6 +1,6 @@
 ARG PNAME="cpp-tmpl"
 
-FROM ${PNAME}:base
+FROM ${PNAME}:base AS build
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     addgroup -g 1000 cpp; \

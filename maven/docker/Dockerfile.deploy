@@ -3,9 +3,6 @@ ARG PNAME="maven-tmpl"
 # build stage
 FROM ${PNAME}:base AS build
 
-RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make
-
 COPY docker/settings.xml /root/.m2/settings.xml
 
 COPY . /project

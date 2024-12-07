@@ -1,10 +1,6 @@
 ARG PNAME="next-tmpl"
 
-FROM ${PNAME}:base
-
-RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make ; \
-    npm install -g pnpm
+FROM ${PNAME}:base AS build
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     apk add bash openssh-client-default

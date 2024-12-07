@@ -2,4 +2,4 @@ FROM ruby:3.3-alpine
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
-    apk add ca-certificates tzdata postgresql-client bash
+    apk add ca-certificates tzdata curl git g++ gcc make postgresql-dev

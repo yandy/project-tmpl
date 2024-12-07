@@ -1,9 +1,6 @@
 ARG PNAME="python-tmpl"
 
-FROM ${PNAME}:base
-
-RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make
+FROM ${PNAME}:base AS build
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     addgroup -g 1000 python; \

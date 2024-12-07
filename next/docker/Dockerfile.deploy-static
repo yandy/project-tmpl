@@ -3,10 +3,6 @@ ARG PNAME="next-tmpl"
 # build stage
 FROM ${PNAME}:base AS build
 
-RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
-    apk add curl git g++ gcc make ; \
-    npm install -g pnpm
-
 COPY package.json pnpm-lock.yaml /project/
 
 WORKDIR /project
