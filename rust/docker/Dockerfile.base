@@ -1,0 +1,7 @@
+FROM rust:1.83-alpine
+
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
+    apk add curl git
+
+COPY docker/config-mirror.toml /.cargo/config.toml
