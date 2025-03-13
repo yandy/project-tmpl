@@ -16,5 +16,9 @@
 
 ## Templates
 
-1. `python` - python app template, include dev, deploy
-2. `next` - nextjs app template, include dev, deploy(ssr or static)
+1. `cpp` - cpp app template, include dev, deploy
+2. `maven` - java app using maven template, include dev, deploy
+3. `next` - nextjs app template, include dev, deploy(ssr or static)
+4. `python` - python app template, include dev, deploy
+5. `rails` - rails app template, include dev, deploy
+6. `rust` - rust app template, include dev, deploy
