@@ -1,4 +1,3 @@
 #!/bin/bash -e
 
-pnpm config set registry https://registry.npmmirror.com
-pnpm config set store-dir $1/.pnpm-store
+npm config set registry https://registry.npmmirror.com

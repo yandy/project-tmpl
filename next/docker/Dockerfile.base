@@ -2,5 +2,4 @@ FROM node:22-alpine
 
 RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
     sed -i "s@dl-cdn.alpinelinux.org@mirrors.ustc.edu.cn@g" /etc/apk/repositories; \
-    apk add curl git g++ gcc make ; \
-    npm install -g pnpm
+    apk add curl git g++ gcc make

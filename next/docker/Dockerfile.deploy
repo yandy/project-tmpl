@@ -3,18 +3,17 @@ ARG PNAME="next-tmpl"
 # build stage
 FROM ${PNAME}:base AS build
 
-COPY package.json pnpm-lock.yaml /project/
+COPY package.json package-lock.json /project/
 
 WORKDIR /project
 
-RUN --mount=type=cache,target=/var/cache/pnpm-store set -eux; \
-    pnpm config set registry https://registry.npmmirror.com ; \
-    pnpm config set store-dir /var/cache/pnpm-store ; \
-    pnpm install
+RUN --mount=type=cache,target=/root/.npm set -eux; \
+    npm config set registry https://registry.npmmirror.com ; \
+    npm install
 
 COPY . /project
 
-RUN  pnpm run build
+RUN npm run build
 
 
 # deploy stage
