@@ -26,4 +26,6 @@ COPY --from=build /project/public ./public
 COPY --from=build /project/.next/standalone ./
 COPY --from=build /project/.next/static ./.next/static
 
+ENV HOSTNAME="0.0.0.0" PORT=3000
+
 CMD ["node", "server.js"]
