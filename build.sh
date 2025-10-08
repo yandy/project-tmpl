@@ -2,7 +2,7 @@
 
 # 检查参数数量
 if [ "$#" -lt 1 ]; then
-	echo "Usage: $0 <base|dev|deploy|...>"
+	echo "Usage: $0 <base|deploy|...>"
 	exit 1
 fi
 
@@ -13,12 +13,13 @@ if [ $1 = "base" ]; then
 	exit 0
 fi
 
-dockerfile="docker/Dockerfile.${1}"
-tagname="${pname}:${1}"
+mode="${1:-deploy}"
+dockerfile="docker/Dockerfile.${mode}"
+tagname="${pname}:${mode}"
 
 if [ -f "${dockerfile}" ]; then
 	docker build --build-arg PNAME=${pname} -t ${tagname} -f ${dockerfile} .
 else
-	echo "Usage: $0 <base|dev|deploy|...>"
+	echo "Usage: $0 <base|deploy|...>"
 	exit 1
 fi
