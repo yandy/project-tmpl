@@ -4,73 +4,56 @@
     {
       "name": "vcpkg",
       "generator": "Ninja",
-      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "hidden": true
+    },
+    {
+      "name": "develop",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Debug"
+        },
+        "CMAKE_EXPORT_COMPILE_COMMANDS": {
+          "type": "bool",
+          "value": true
+        }
+      },
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build"
+    },
+    {
+      "name": "deploy",
+      "inherits": "vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "string",
+          "value": "Release"
+        }
+      },
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build"
     },
     {
       "name": "develop-windows",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Debug"
-        }
-      },
-      "binaryDir": "${sourceDir}/build/windows"
+      "inherits": "develop"
     },
     {
-      "name": "develop-wsl",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Debug"
-        }
-      },
-      "binaryDir": "${sourceDir}/build/wsl"
-    },
-    {
-      "name": "develop-docker",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Debug"
-        }
-      },
-      "binaryDir": "${sourceDir}/build/docker"
+      "name": "develop-linux",
+      "inherits": "develop"
     },
     {
       "name": "deploy-windows",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Release"
-        }
-      },
-      "binaryDir": "${sourceDir}/build"
+      "inherits": "deploy"
     },
     {
       "name": "deploy-linux",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Release"
-        }
-      },
-      "binaryDir": "${sourceDir}/build"
+      "inherits": "deploy"
     },
     {
       "name": "deploy-docker",
-      "inherits": "vcpkg",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": {
-          "type": "string",
-          "value": "Release"
-        }
-      },
-      "binaryDir": "${sourceDir}/build",
+      "inherits": "deploy",
       "installDir": "/opt/project"
     }
   ]
