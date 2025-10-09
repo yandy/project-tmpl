@@ -1,5 +1,0 @@
-#!/bin/sh -e
-
-source /pyvenv/bin/activate
-
-exec "${@}"

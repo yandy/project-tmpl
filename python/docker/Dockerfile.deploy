@@ -3,6 +3,9 @@ ARG PNAME="python-tmpl"
 # build stage
 FROM ${PNAME}:base AS build
 
+RUN --mount=type=cache,target=/var/cache/apk/ set -eux; \
+    apk add curl git g++ gcc make
+
 COPY ./requirements.txt /project/requirements.txt
 
 RUN --mount=type=cache,target=/root/.cache/pip set -eux; \
@@ -13,12 +16,11 @@ RUN --mount=type=cache,target=/root/.cache/pip set -eux; \
 
 
 # deploy stage
-FROM python:3.12-alpine AS runner
+FROM ${PNAME}:base AS runner
 
-COPY --chmod=755 ./docker/entrypoint.deploy /entrypoint
 COPY --from=build /pyvenv /pyvenv
 COPY . /project
 
 WORKDIR /project
 
-ENTRYPOINT ["/entrypoint"]
+CMD [ "sh", "-c", "source /pyvenv/bin/activate ; flask run --host=0.0.0.0 --port=8000" ]
