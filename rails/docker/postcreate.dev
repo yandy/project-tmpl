@@ -1,5 +1,0 @@
-#!/bin/bash -e
-
-gem sources -a https://mirrors.ustc.edu.cn/rubygems/ --remove https://rubygems.org/
-bundle config set mirror.http://rubygems.org https://mirrors.ustc.edu.cn/rubygems/
-bundle config set path .bundle

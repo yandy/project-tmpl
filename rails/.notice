@@ -1,3 +1,0 @@
-# Notice!!!!
-
-You are required to substitute `{{pname}}` in `.devcontainer/compose.yml.tmpl` with your repo name or ImageName and rename it to `.devcontainer/compose.yml`
